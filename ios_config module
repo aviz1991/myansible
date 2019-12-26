@@ -1,0 +1,28 @@
+---
+- name: Manage GNS3 devices
+  hosts: all
+  gather_facts: false
+  connection: local
+
+  vars:
+    cli:
+      username: aviz
+      password: cisco
+
+  tasks:
+    - name: enable ospf
+      ios_config:
+        provider: "{{ cli }}"
+        authorize: yes
+        parents: router ospf 1
+        lines:
+          - network 0.0.0.0 255.255.255.255 area 0
+        lines:
+          - description test interface
+          - ip address 172.31.1.1 255.255.255.0
+          
+        parents: interface g0/1
+
+      register: print_output
+
+    -  debug: var=print_output
