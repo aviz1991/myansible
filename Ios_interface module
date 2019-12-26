@@ -1,0 +1,23 @@
+---
+- name: Manage GNS3 devices
+  hosts: all
+  gather_facts: false
+  connection: local
+
+  vars:
+    cli:
+      username: aviz
+      password: cisco
+
+  tasks:
+    - name: configure interfaces
+      ios_interface:
+          provider: "{{ cli }}"
+          authorize: yes
+          name: loopback0
+          description: 'Configured and Merged by Ansible Network'
+          enabled: True
+
+      register: print_output
+
+    -  debug: var=print_output
