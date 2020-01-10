@@ -1,0 +1,19 @@
+---
+- name: Manage GNS3 devices
+  hosts: all
+  gather_facts: false
+  connection: local
+
+
+  tasks:
+    - name: configure interfaces
+      ios_interface:
+          authorize: yes
+          name: loopback1
+          description: 'Configured and Merged by Ansible Network'
+          enabled: True
+
+      register: print_output
+
+
+    - debug: var=print_output
